@@ -1,6 +1,9 @@
+import { api } from 'api/api';
 import { BackLink } from 'components/BackLink/BackLink';
-// import { useState } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import MoviesList from 'components/MoviesList/MoviesList';
+import { Suspense, useState } from 'react';
+import { Outlet, useLocation, useSearchParams } from 'react-router-dom';
+import { StyledInput } from './Movies.styled';
 
 const Movies = () => {
     
@@ -8,10 +11,7 @@ const Movies = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const movieId = searchParams.get('movieId') ?? '';
     const backLinkHref = location.state?.from ?? "/";
-
-    // useEffect(() => {
-    // HTTP запрос, если нужно
-    // }, []);
+    const [movies, setMovies] = useState([]);
 
     const updateQueryString = evt => {
         const movieIdValue = evt.target.value;
@@ -21,26 +21,23 @@ const Movies = () => {
         setSearchParams({ movieId: movieIdValue });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(movieId);
-
+        const response = await api.getSaughtMovies(movieId);
+        setMovies(response);
     };
-
-    // const handleMovieClick = (movie) => {
-    //     console.log(movie);
-    // };
-
-    // const shownMovies = movies.filter(movie => movie.includes(movieId));
 
     return (
         <div>
             <BackLink to={backLinkHref}>Go back</BackLink>
             <form onSubmit={handleSubmit}>
-                <input type="text" value={movieId} onChange={updateQueryString} />
-                <input type="submit" value="Search" />
+                <StyledInput type="text" value={movieId} onChange={updateQueryString} />
+                <button type="submit">Search</button>
             </form>
-            
+            <MoviesList movies={ movies } />
+            <Suspense fallback={<div>LOADING...</div>}>
+                <Outlet />
+            </Suspense>
         </div>
     );
 }

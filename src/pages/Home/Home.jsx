@@ -1,12 +1,10 @@
 import { api } from 'api/api';
 import MoviesList from 'components/MoviesList/MoviesList';
 import { useEffect, useState } from 'react';
-
-// import { useLocation } from 'react-router-dom';
+import { StyledH2 } from './Home.styled';
 
 const Home = () => {
     const [movies, setMovies] = useState([]);
-    // const location = useLocation();
 
     useEffect(() => {
         const getTrendingMovies = async () => {
@@ -20,7 +18,7 @@ const Home = () => {
 
     return (
         <>
-            <h2>Trending today</h2>
+            <StyledH2>Trending today</StyledH2>
             <MoviesList movies={ movies } />
         </>
     );

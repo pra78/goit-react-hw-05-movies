@@ -2,16 +2,19 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 
 export const StyledLink = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 8px 0;
-  color: black;
-  text-decoration: none;
-  font-weight: 500;
-  text-transform: uppercase;
+    display: block;
+    margin: 5px;
+`;
 
-  :hover {
-    color: orangered;
-  }
+export const StyledButton = styled.button`
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+
+    &:hover {
+        background-color: blue;
+        color: white;
+    }
 `;

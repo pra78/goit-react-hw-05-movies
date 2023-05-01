@@ -1,6 +1,7 @@
 import { api } from "api/api";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import { StyledImg } from "./Cast.styled";
 
 const Cast = () => {
     const location = useLocation();
@@ -26,20 +27,17 @@ const Cast = () => {
     }, [movieId, location]); 
 
     return (
-        <>
-            <p>Cast</p>
-            <ul>
-                {cast.map(actor => {
-                    return (
-                        <li key={actor.id}>
-                            {actor.profilePic}
-                            {actor.name}
-                            {actor.character}
-                        </li>
-                    );
-                })}
-            </ul>
-        </>
+        <ul>
+            {cast.map(actor => {
+                return (
+                    <li key={actor.id}>
+                        <StyledImg src={actor.profilePic} alt={actor.name} />
+                        <p>{actor.name}</p>
+                        <p>Character: {actor.character}</p>
+                    </li>
+                );
+            })}
+        </ul>
     );
 }
 

@@ -1,14 +1,12 @@
 import { api } from "api/api";
 import { BackLink } from "components/BackLink/BackLink";
-import Cast from "pages/Cast/Cast";
-import Reviews from "pages/Reviews/Reviews";
-import { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Suspense, useEffect, useState } from "react";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
+import { StyledContainer, StyledImg } from "./MovieDetails.styled";
 
 const MovieDetails = () => {
     const location = useLocation();
     const movieId = useParams().movieId ?? '';
-    const backLinkHref = location.state?.from ?? "/";
     const [poster, setPoster] = useState('');
     const [title, setTitle] = useState('');
     const [rating, setRating] = useState(0);
@@ -31,25 +29,32 @@ const MovieDetails = () => {
 
     return (
         <>
-            <BackLink to={backLinkHref}>Go back</BackLink>
-            <img src={poster} alt={title} />
-            <h3>{title}</h3>
-            <p>User score: {rating}%</p>
-            <h4>Overview</h4>
-            <p>{overview}</p>
-            <h5>Genres</h5>
-            <p>{genres.map(genre => String(genre) + " ")}</p>
-            <hr/>
+            <BackLink to="/">Go back</BackLink>
+            <StyledContainer>
+                <StyledImg src={poster} alt={title} />
+                <div>
+                    <h3>{title}</h3>
+                    <p>User score: {rating}%</p>
+                    <h4>Overview</h4>
+                    <p>{overview}</p>
+                    <h5>Genres</h5>
+                    <p>{genres.map(genre => String(genre) + " ")}</p>
+                </div>
+            </StyledContainer>
+            <hr />
             <p>Additional information</p>
             <ul>
                 <li>
-                    <Link to={`cast`} state={{ from: location }}><Cast/></Link>
+                    <Link to={`cast`} state={{ from: location }}>Cast</Link>
                 </li>
                 <li>
-                    <Link to={`reviews`} state={{ from: location }}><Reviews/></Link>
+                    <Link to={`reviews`} state={{ from: location }}>Reviews</Link>
                 </li>
             </ul>
             <hr />
+            <Suspense fallback={<div>LOADING...</div>}>
+                <Outlet />
+            </Suspense>
         </>
     );
 }
