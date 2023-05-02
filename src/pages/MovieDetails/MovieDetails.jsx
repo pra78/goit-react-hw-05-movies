@@ -7,6 +7,7 @@ import { StyledContainer, StyledImg } from "./MovieDetails.styled";
 const MovieDetails = () => {
     const location = useLocation();
     const movieId = useParams().movieId ?? '';
+    const backLinkHref = location.state?.from ?? "/movies";
     const [poster, setPoster] = useState('');
     const [title, setTitle] = useState('');
     const [rating, setRating] = useState(0);
@@ -29,7 +30,7 @@ const MovieDetails = () => {
 
     return (
         <>
-            <BackLink to="/">Go back</BackLink>
+            <BackLink to={ backLinkHref }>Go back</BackLink>
             <StyledContainer>
                 <StyledImg src={poster} alt={title} />
                 <div>
@@ -45,10 +46,10 @@ const MovieDetails = () => {
             <p>Additional information</p>
             <ul>
                 <li>
-                    <Link to={`cast`} state={{ from: location }}>Cast</Link>
+                    <Link to={`cast`} state={{ from: backLinkHref }}>Cast</Link>
                 </li>
                 <li>
-                    <Link to={`reviews`} state={{ from: location }}>Reviews</Link>
+                    <Link to={`reviews`} state={{ from: backLinkHref }}>Reviews</Link>
                 </li>
             </ul>
             <hr />

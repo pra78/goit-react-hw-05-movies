@@ -9,9 +9,6 @@ const Reviews = () => {
     const [reviews, setReviews] = useState([]);
 
     useEffect(() => {
-        if (location.pathname !== `/movies/${movieId}/reviews`) {
-            return;
-        }
         const getMovieReviews = async () => {
             const response = await api.getReviews(movieId);
             setReviews(response.results.map(({ id, author, content }) => ({ id, author, content, })));

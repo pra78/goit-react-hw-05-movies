@@ -9,9 +9,6 @@ const Cast = () => {
     const [cast, setCast] = useState([]);
 
     useEffect(() => {
-        if (location.pathname !== `/movies/${movieId}/cast`) {
-            return;
-        }
         const getMovieCast = async () => {
             const response = await api.getCredits(movieId);
             setCast(response.cast.map(actor => ({
