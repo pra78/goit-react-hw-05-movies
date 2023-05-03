@@ -32,7 +32,7 @@ const Movies = () => {
         <div>
             <form onSubmit={handleSubmit}>
                 <StyledInput type="text" value={searchQuery} onChange={updateQueryString} />
-                <button type="submit">Search</button>
+                <button type="submit" disabled={searchQuery ? false : true}>Search</button>
             </form>
             <MoviesList movies={ movies } />
             <Suspense fallback={<div>LOADING...</div>}>
